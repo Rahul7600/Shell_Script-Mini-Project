@@ -20,7 +20,7 @@ backup_file() {
 }
 
 # Backup some important files
-backup_file ~/.bashrc
+backup_file ~/.bashrcc
  
 sudo apt install nginx
 
