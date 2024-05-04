@@ -27,5 +27,3 @@ sudo apt install nginx
 sudo systemctl restart nginx
 
 echo "Done!""
-
-echo 
