@@ -28,6 +28,6 @@ sudo systemctl restart nginx
 
 echo "Done!""
 
-hello
+
 
 
