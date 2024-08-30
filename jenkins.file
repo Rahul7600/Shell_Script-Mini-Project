@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    environment {
+        EC2_IP = '3.109.157.229'
+        EC2_USER = 'ubuntu'
+        SSH_KEY = credentials('my-ssh-key')  // Replace with your actual SSH credentials ID
+        DEPLOY_DIR = '/home/ubuntu/Shell_Script-Mini-Project'
+        DEPLOY_SCRIPT = 'deploy.sh'  // Optional deployment script
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/Rahul7600/Shell_Script-Mini-Project.git', branch: 'main'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    try {
+                        // Deploy the latest code without backup
+                        sh """
+                            ssh -i ${SSH_KEY} ${EC2_USER}@${EC2_IP} "cd ${DEPLOY_DIR} && git pull origin main && bash ${DEPLOY_SCRIPT}"
+                        """
+                    } catch (Exception e) {
+                        currentBuild.result = 'FAILURE'
+                        echo "Deployment failed: ${e.getMessage()}"
+                        error "Deployment failed"
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Deployment failed.'
+        }
+    }
+}
