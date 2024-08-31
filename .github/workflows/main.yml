@@ -19,16 +19,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up SSH agent
-      uses: webfactory/ssh-agent@v0.6.0
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
     - name: Deploy latest code
       run: |
         ssh -o StrictHostKeyChecking=no -p ${{ env.EC2_PORT }} ${{ env.EC2_USER }}@${{ env.EC2_HOST }} << EOF
           cd ${DEPLOY_DIR}
           git pull origin main
+          ls -l ${DEPLOY_SCRIPT}  # Ensure the script exists
           bash ${DEPLOY_SCRIPT}
         EOF
 
@@ -39,3 +35,4 @@ jobs:
     - name: Notify failure
       if: failure()
       run: echo "Deployment failed."
+
