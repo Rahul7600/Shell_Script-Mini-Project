@@ -28,7 +28,7 @@ sudo systemctl restart nginx
 
 echo "Done!""
 
-Hello Devops
+Hello Devopss
 
 
 
