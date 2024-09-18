@@ -7,4 +7,4 @@ do
         clear
         echo $Yellow $(date +%T)
         sleep 1s
-done
+donee
