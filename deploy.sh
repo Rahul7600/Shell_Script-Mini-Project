@@ -12,4 +12,4 @@ git pull origin main
 
 # Optionally, you can add additional commands here, such as restarting services or cleaning up
 
-echo "Deployment completed successfully."
+echo "Deployment completed successfullyy."
